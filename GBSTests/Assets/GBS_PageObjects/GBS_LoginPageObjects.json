@@ -1,0 +1,11 @@
+{
+    "loginpageObjectsConfig": {
+        "emailSelector": "#signInEmail_label",
+        "passwordSelector": "#password",
+        "continueSignInSelector": "#continue",
+        "signInButtonSelector": "#next",
+        "signInButtonTextSelector": "#SignInButtonText",
+        "signOutButtonSelector": "#signOutButton",
+        "inValidSigninMessageSelector": "//div[@id='pageErrors']/div[2]//p"
+    }
+}

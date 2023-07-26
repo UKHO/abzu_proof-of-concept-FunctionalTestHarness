@@ -1,0 +1,18 @@
+{
+    "autoTestConfig": {
+        "url": "",
+        "testUserName": "",
+        "testPassword":"",
+        "testUserName2":"",
+        "testPassword2":"",
+        "invalidUserName": "abc@xyz.com",
+        "invalidPassword":"1111",
+	    "stripeNameOnCard":"TestUser",
+        "stripeCvvNumber":"123",
+        "stripeCardExpiryDate":"01/29",
+        "stripeTestCardNumber":"4242424242424242",
+        "stripeInsufficientFundsTestCardNumber":"4000000000009995",
+        "stripePinCode":"421200",
+        "stripeUserAddress":"TestCity1"
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "s100.ui.jstests",
+  "version": "1.0.0",
+  "description": "Unit Test research",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.30.0"
+  }
+}

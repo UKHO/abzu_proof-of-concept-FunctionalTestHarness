@@ -1,0 +1,23 @@
+{
+    "homePageObjectsConfig": {
+        "headerLogoSelector": "#siteLogoImage",
+        "searchCordinateSelector": "#ukho-form-field-1",
+        "polygonDrawingToolSelector": "#polygonButton",
+        "squareDrawingToolSelector": "#rectangleButton",
+        "pointDrawingToolSelector": "#pointButton",
+        "zoomInSelector": "#zoomInButton",
+        "zoomOutSelector": "#zoomOutButton",
+        "searchButtonSelector": "#searchButton",
+        "searchByCoordinateSelector": "#searchControl > ukho-textinput >div > label",
+        "errorDialogueBoxSelector": "#validationErrorsDialogue",
+        "errorDialogueBoxTextSelector": "//li[text()=' Please provide a coordinate in valid format (Lat, Lon) ']",
+        "dialogueExitButtonSelector": "#dialogueExitButton",
+        "specialCharacters": "@#$",
+        "signInLink": "#signInButton",
+        "validationTextSelector":"//ukho-dialogue[@id='validationErrorsDialogue']//li",
+        "incorrectCoordinates": "4a.90o, -0.rr56",
+        "errorTextSelector": " Please provide a coordinate in valid format (Lat, Lon) ",
+        "searchByCoordinatePlaceholderSelector": "Search by coordinate (e.g. 49.9865, -5.3787)",
+        "validationText": "greater than the maximum of 36 cells. "          
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "splashScreenPageObjectsConfig": {
+        "splashTextSelector": "#modalTitle",
+        "continueSiteSelector": "#modalEnterSiteButton",
+        "closeSplashSelector": "#modalCloseButton",
+        "splashModalSelector": "#splashModal",
+        "splashScreenMessage":"Welcome to the Gridded Bathymetry Service"
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "s100.ui.jstests",
+  "version": "1.0.0",
+  "description": "Unit Test research",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

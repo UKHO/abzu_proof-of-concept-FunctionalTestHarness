@@ -1,0 +1,24 @@
+{
+    "stripePaymentPageObjectsConfig": {
+        "stripeEmailSelector":"#email",
+        "stripeCardNumberSelector":"#cardNumber",
+        "stripeCardExpirySelector":"#cardExpiry",
+        "stripeCvvSelector":"#cardCvc",
+        "stripeNameOnCardSelector":"#billingName",
+        "stripeBillingAdd1Selector":"#billingAddressLine1",
+        "stripeBillingAdd2Selector":"#billingAddressLine2",
+        "stripeBillingCitySelector":"#billingLocality",
+        "stripePinCodeSelector":"#billingPostalCode",
+        "stripeBillingStateSelector":"#billingAdministrativeArea",
+        "stripePayButtonSelector":"//div[@class='SubmitButton-IconContainer']",
+        "stripeAdmiralityLogo":"#admiraltyLogo",
+        "stripeBackButtonSelector":"div.Header-merchantLogoContainer > div",
+        "stripePaymentFailureMessageSelector":"#payment-cancelled-wrapper >h1",
+        "stripePaymentSuccessAndFailureMessageSelector":"#payment-confirmation-wrapper >h1",
+        "stripePaymentSuccessMessage":"Thank you for your payment!",
+        "stripePaymentFailureMessage":"Payment Cancelled",
+        "stripeLnkEnterAddManually" :"//span[contains(text(),'Enter address manually')]",
+        "stripeInsufficientFundsMessageSelector":"#cardNumber-fieldset >div >div >span >span",
+        "stripeInsufficientFundsMessage":"Your credit card was declined because of insufficient funds. Try paying with a debit card instead."  
+    }
+}

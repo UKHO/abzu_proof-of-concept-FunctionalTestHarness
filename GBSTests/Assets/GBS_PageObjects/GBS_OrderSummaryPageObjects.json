@@ -1,0 +1,19 @@
+{
+    "orderSummaryPageObjectsConfig": {
+        "checkoutButtonSelector": "#checkoutButton",
+        "backButtonSelector": "#backButton",
+        "termsofUseValidaationErrorSelector": "#termsOfUseValidationError",
+        "termsofUseErrormsgHeadingSelector": "#termsOfUseValidationError >div>h3",
+        "termsofUseErrormsgDescriptionSelector": "#termsOfUseValidationError >div>p",
+        "termsofUseCheckBoxSelector": "#termsAndConditionsCheckbox",
+        "orderSummaryHeadingSelector": "#orderSummaryHeading",
+        "priceWithoutVatSelector": "#priceWithoutVat",
+        "priceSelector":"#price",
+        "priceWithVatSelector":"#priceWithVat",
+        "areaSelected":"#sizeOfAreaSelected",
+        "termsAndConditionsCheckboxSelector": "//ukho-checkbox[@id='termsAndConditionsCheckbox']/input",
+        "orderSummaryHeadingText": "Your order summary",
+        "vatAmount":"5.00",
+        "totalAmount":"£30.00"
+    }
+}

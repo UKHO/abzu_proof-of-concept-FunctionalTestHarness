@@ -1,0 +1,12 @@
+{
+    "autoTestConfig":
+    {
+       "url":"https://fss-dev.admiralty.co.uk",
+       "testAccountUserName" :"UKHODevTestUser1@outlook.com",
+       "testAccountPassword":"Fh84e3W!kl",
+       "user" :"UKHODevTestUser1@outlook.com",
+       "password" : "Fh84e3W!kl",
+       "userFullName" : "Test User",
+       "webname" : "Admiralty Home Page Functional Test Scenarios"
+    }
+}

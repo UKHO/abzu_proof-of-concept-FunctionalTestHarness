@@ -1,0 +1,9 @@
+{
+    "layerSwitcherPageObjectsConfig": {
+
+        "layerSwitcherSelector": "#layerIconButton",
+        "gridControlSelector":"//div[2]/ul/li[1]/input",
+        "wmsControlSelector":"//div[@class='panel']/ul//li[2]/input",
+        "closeLayerSwitcherSelector":"#close-layer-switcher"
+    }
+}

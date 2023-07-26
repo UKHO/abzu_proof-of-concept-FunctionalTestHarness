@@ -1,0 +1,64 @@
+{
+  "Environment": "",
+  "GoogleTagManagerId": "Not-Needed-For-Running-Locally",
+  "b2cConfig": {
+    "tenantName": "",
+    "clientId": "",
+    "redirectUri": "/",
+    "postLogoutRedirectUri": "/logout.html",
+    "navigateToLoginRequestUrl": true,
+    "signUpSignIn": "B2C_1A_SignIn_SPA",
+    "editProfile": "B2C_1A_UserProfile",
+    "cacheLocation": "localStorage",
+    "storeAuthStateInCookie": true,
+    "interactionType": "popup"
+  },
+  "fssConfig": {
+    "copyright": "@ Crown copyright 2021 UK Hydrographic office",
+    "fssTitle": "File Share Service",
+    "displayPopularSearch": true,
+    "displaySimplifiedSearchLink": true,
+    "phase": "beta",
+    "feedbackEmailId": "products.feedback@UKHO.gov.uk",
+    "apiUrl": "",
+    "apiScope": "",
+    "stateManagementApiUrl": "",
+    "batchAttributes": [
+      {
+        "attributeSortType": "alphabetical",
+        "attribute": "Media Type",
+        "sortOrder": "ascending"
+      },
+      {
+        "attributeSortType": "alphabetical",
+        "attribute": "Product Type",
+        "sortOrder": "ascending"
+      },
+      {
+        "attributeSortType": "numeric",
+        "attribute": "Year / Week",
+        "sortOrder": "descending"
+      },
+      {
+        "attributeSortType": "numeric",
+        "attribute": "Year",
+        "sortOrder": "descending"
+      }
+    ],
+    "maxAttributeValueCount" : 25
+  },
+  "essConfig": {
+    "MaxEncLimit": "250",
+    "MaxEncSelectionLimit": "100",
+    "maxRetries": "3",
+    "initialDelayMs": "1000",
+    "apiUrl": "",
+    "apiScope": "",
+    "avgSizeofENCinMB": "0.3",
+    "defaultEstimatedSizeinMB": "0.5",
+    "aioExcludeEncs" : ["GB800001","FR800001"]
+  },
+  "autoTestConfig" : {
+    "encSizeConfig" : "25"
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "downloadDataPageObjectsConfig": {
+        "fileProcessingSuccessMsgSelector": "#fileProcessingSuccessMsg >p",
+        "fileDownloadSuccessMsgSelector":"#fileDownloadCompletedMsg >p",
+        "downloadFileButtonSelector": "#downloadFileButton",
+        "loadingIconSelector":"#loading-icon > i",
+        "invalidMsgSelector":"#unauthorisedRequestMsg > p",
+        "orderValiditySelector":"#orderValidity",
+        "orderIdSelector":"#orderDetails > p",
+        "successMessage":"Data set generated successfully.",
+        "invalidMessage":"You are unauthorised to download the requested file.",
+        "downloadMessage":"Data set downloaded successfully.",
+        "orderValidityMessage":"Your download will be available for 30 days after purchase."
+    }
+}

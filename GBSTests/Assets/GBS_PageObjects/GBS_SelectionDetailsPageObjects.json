@@ -1,0 +1,21 @@
+{
+    "selectionDetailsPageObjectsConfig": {
+        "outputTypeSelector": "#ukho-form-field-2",
+        "nextButtonSelector": "#nextBtn",
+        "backButtonSelector": "#backButton",
+        "selectionDialogueSelector": "#side-menuContainer",
+        "sideMenuSelector": "#side-menuContainer",
+        "selectionHeadingSelector": "#selectionHeading",
+        "amountSelector":"#amount",
+        "cellsSelector": "#numberOfSelectedItems",
+        "outputTypeValueSelector": "//select[@id='ukho-form-field-2']/option",
+        "minimizeSelectionButtonSelector": "//div[@id='mapViewContainer']//i[contains(@class,'caret-right')]",
+        "expandIconSelector": "//div[@id='mapViewContainer']//i[contains(@class,'caret-left')]",
+        "searchCoordinates": "53.2485, -4.0672",
+        "selectionHeadingText": " Your selection",
+        "amount":"25.00",
+        "ASCIIOutputType":"ASCII",
+        "GeoTiffOutputType":"GeoTiff",
+        "BAGOutputType":"BAG"
+    }
+}
