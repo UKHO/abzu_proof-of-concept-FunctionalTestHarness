@@ -5,7 +5,7 @@ import { fssSearchPageObjectsConfig } from '../Assets/PageObjects/fss-searchpage
 import { AcceptCookies, LoginPortal} from '../Assets/Helper/CommonHelper';
 import {
   ExpectAllResultsHaveBatchUserAttValue, ExpectAllResultsContainAnyBatchUserAttValue,
-  ExpectAllResultsContainBatchUserAttValue, InsertSearchText, ExpectSpecificColumnValueDisplayed,
+  ExpectAllResultsContainBatchUserAttValue, InsertSearchText, ExpectSpecificColumnValueDisplayed, AdmiraltyExpectAllResultsHaveFileAttributeValue,
   GetTotalResultCount, filterCheckBox, GetSpecificAttributeCount, ExpectAllResultsContainAnyBatchUserAndFileNameAttValue,ExpectAllResultsHaveFileAttributeValue
 } from '../Assets/Helper/SearchPageHelper';
 import { attributeProductType, searchNonExistBatchAttribute, batchAttributeKeys, attributeMultipleMediaTypes, attributeMultipleMediaType,attributeFileName } from '../Assets/Helper/ConstantHelper';
@@ -109,7 +109,8 @@ test.describe('Test Search Result Scenario On Simplified Search Page', () => {
     await page.waitForSelector(fssSearchPageObjectsConfig.searchResultTableSelector);
     await ExpectAllResultsContainAnyBatchUserAndFileNameAttValue(page, attributeMultipleMediaType.value.split(' '));
 
-    const configuredBatchAttibutes  = await page.$$eval(fssSearchPageObjectsConfig.filterBatchAttributes, elements => { return elements.map(element => element.textContent) });
+    //const configuredBatchAttibutes = await page.$$eval(fssSearchPageObjectsConfig.filterBatchAttributes, elements => { return elements.map(element => element.textContent) });
+    const configuredBatchAttibutes  = await page.$$eval('admiralty-filter', elements => { return elements.map(element => element.textContent) })
     const filterCount = configuredBatchAttibutes.length;
     expect(filterCount).toBeGreaterThan(0);
 
@@ -121,6 +122,8 @@ test.describe('Test Search Result Scenario On Simplified Search Page', () => {
     }
 
   })
+
+ 
 
   test('Verify batch attributes filter can select or deselect', async ({ page }) => {
     await InsertSearchText(page, attributeMultipleMediaType.value);
@@ -207,7 +210,7 @@ test.describe('Test Search Result Scenario On Simplified Search Page', () => {
     await expect(page.getByText(attributeFileName.value).first()).toBeVisible();
 
     //=======================================
-    await ExpectAllResultsHaveFileAttributeValue(page, attributeFileName.value);    //RHZ 
+    await  AdmiraltyExpectAllResultsHaveFileAttributeValue(page, attributeFileName.value);    //RHZ 
     // verify paginator links are available on the page
     expect(await page.getByRole('button', {name: fssSearchPageObjectsConfig.paginatorLinkNext})).toBeTruthy();
     expect(await page.getByRole('button', {name: fssSearchPageObjectsConfig.paginatorLinkPrevious})).toBeTruthy();

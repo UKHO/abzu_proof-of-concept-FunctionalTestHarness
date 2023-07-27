@@ -159,8 +159,31 @@ export async function ExpectAllResultsHaveFileAttributeValue(
     `//table[@class='${fssSearchPageObjectsConfig.fileAttributeTable.substring(1)}' and 0 < count(.//td[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '${preciseValue.toLowerCase()}')])]`); */
     await ExpectSelectionsAreEqual(page,
     `//admiralty-table`,
-    `//admiralty-table[.//admiralty-table-cell[contains(., '${preciseValue.toLowerCase()}')]]`);  //Rhz
+    `//admiralty-table[.//admiralty-table-cell[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '${preciseValue.toLowerCase()}')]]`);  //Rhz
 }
+
+export async function AdmiraltyExpectAllResultsHaveFileAttributeValue(
+  page: Page, preciseValue: string): Promise<void> {
+  const admiraltyTables = await page.$$('admiralty-table');
+  const filteredTables = await Promise.all(admiraltyTables.map(async (table) => {
+     const cells = await table.$$('admiralty-table-cell');
+     const hasTest = await Promise.all(cells.map(async (cell) => {
+      const text = await cell.textContent();
+      if(text != null) {
+        return text.toLowerCase().includes(preciseValue.toLowerCase());
+      } else {
+        return false;
+      }
+    }));
+    return hasTest.includes(true) ? table : null;
+  }));
+
+  const filteredTablesWithoutNulls = filteredTables.filter((table) => table !== null);
+
+  expect(admiraltyTables.length).toEqual(filteredTablesWithoutNulls.length);
+}
+
+
 
 async function ExpectSelectionsAreEqual(page: Page, tablePath: string, tablePathWithCondition: string): Promise<void> {
   await page.waitForTimeout(3000);
@@ -193,8 +216,8 @@ async function ExpectSelectionsAreEqualforBatchAndFile(page: Page, tableBatchAtt
 
     for (let rc = 0; rc < resultCount; rc++) {
       const searchedBatchAttibutes = await page.$$eval(`${tableBatchAttribute}//tr//td[1]`, elements => { return elements.map(element => element.textContent) });
-      page.waitForTimeout(2000);
-      const searchFileName = await page.$$eval(`${filePath}//tr//td[1]`, elements => { return elements.map(element => element.textContent) });
+      //page.waitForTimeout(2000);
+      //const searchFileName = await page.$$eval(`${filePath}//tr//td[1]`, elements => { return elements.map(element => element.textContent) });
 
       switch (true) {
         case (searchedBatchAttibutes[rc]?.includes(condition[0])):
@@ -226,11 +249,12 @@ export async function GetCountOfBatchRows(page: Page): Promise<number> {
   return await page.$$eval(`//table[@class='${fssSearchPageObjectsConfig.searchAttributeTable.substring(1)}']`, matches => matches.length);
 }
 
-export async function ExpectSpecificColumnValueDisplayed(page: Page, tablecloumnName: string, tablecloumnValue: string): Promise<void> {
+export async function ExpectSpecificColumnValueDisplayed(page: Page, tablecloumnName: string, tablecloumnValue: string): Promise<void> { //rhz
 
   while (true) {
     //count the result rows
-    const resultCount = await page.$$eval(`//table[@class='${fssSearchPageObjectsConfig.searchAttributeTable.substring(1)}']`, matches => matches.length);
+    const resultCount = await page.$$eval(`//table[@class='${fssSearchPageObjectsConfig.searchAttributeTable.substring(1)}']`, matches => matches.length); 
+    
 
     //fail if there are no matching selections
     expect(resultCount).toBeTruthy();
@@ -248,7 +272,10 @@ export async function ExpectSpecificColumnValueDisplayed(page: Page, tablecloumn
     expect(attributeFieldCount).toEqual(resultCount);
 
     //if next page paginator link is disable break the infinite loop
-    if (await page.locator(fssSearchPageObjectsConfig.paginatorLinkNextDisabled).isVisible()) {
+    //it seems that playwright equates disabled to visible false
+    //await page.locator(fssSearchPageObjectsConfig.paginatorLinkNextDisabled).isVisible()
+    const visibleState = await page.getByRole('button', {name: fssSearchPageObjectsConfig.paginatorLinkNext}).isVisible();
+    if (!visibleState) {
       break;
     }
     else {
