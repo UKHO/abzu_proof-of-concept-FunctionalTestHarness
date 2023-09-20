@@ -31,7 +31,9 @@ test.describe('Test Search Attribute Scenario On Simplified Search Page', () => 
 
   test('Does it display "Error message" if user clicks on search button and simplified search box is empty', async ({ page }) => {
     //await page.waitForSelector(fssSearchPageObjectsConfig.inputSimplifiedSearchBoxSelector);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    await page.getByTestId('sim-search-button').click();
+
     //await page.click(fssSearchPageObjectsConfig.simplifiedSearchButtonSelector);
     var errorMessage = await page.innerText(fssSearchPageObjectsConfig.dialogTitleSelector);
     expect(errorMessage).toContain(fssSearchPageObjectsConfig.warningMessageValue);

@@ -33,6 +33,8 @@ export async function SearchAttribute(page: Page, attributeName: string) {
   await page.waitForSelector(fssSearchPageObjectsConfig.inputSearchFieldSelector);
   await page.fill(fssSearchPageObjectsConfig.inputSearchFieldSelector, "");
   await page.fill(fssSearchPageObjectsConfig.inputSearchFieldSelector, attributeName);
+  //await page.getByLabel('Search').fill("");
+  //await page.getByLabel('Search').fill(attributeName);
   await page.keyboard.press('Backspace');
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
@@ -105,7 +107,8 @@ export async function InsertSearchText(page: Page, searchBatchAttribute: string)
   await page.click(fssSearchPageObjectsConfig.simplifiedSearchButtonSelector);
   await page.waitForTimeout(2000);  */
   await page.getByRole("textbox").fill(searchBatchAttribute);
-  await page.getByRole('button', {name : "Search"}).click();
+  //await page.getByRole('button', {name : "Search"}).click();
+  await page.getByTestId('sim-search-button').click();
   await page.waitForTimeout(2000);
 }
 
@@ -181,6 +184,31 @@ export async function AdmiraltyExpectAllResultsHaveFileAttributeValue(
   const filteredTablesWithoutNulls = filteredTables.filter((table) => table !== null);
 
   expect(admiraltyTables.length).toEqual(filteredTablesWithoutNulls.length);
+}
+
+
+
+export async function AdmiraltyGetFileSizeCount(page:Page, fileSize: number) {
+  const admiraltyTables = await page.$$('admiralty-table');
+  const filteredTables = await Promise.all(admiraltyTables.map(async (table) => {
+     const cells = await table.$$('admiralty-table-cell');
+     const hasSize = await Promise.all(cells.map(async (cell) => {
+      const text = await cell.textContent();
+      let size = TryGetFileSizeInBytes(text);
+      if(size != null && size > 0 && size < fileSize) {
+        return size;
+      } else {
+        return 0;
+      }
+    }));
+    const actual = hasSize.filter(itm => itm > 0);
+    return actual.length;
+  }));
+  
+
+  return filteredTables.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue
+  },0);
 }
 
 

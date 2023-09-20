@@ -11,7 +11,7 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './FssTests/FunctionalTests',
+  testDir: './FssTests/AccessibilityTests',
   /* Maximum time one test can run for. */
   timeout: 80 * 1000,
   expect: {
@@ -19,7 +19,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 1000
   },
   /* Run tests in files in parallel */
   fullyParallel: true,

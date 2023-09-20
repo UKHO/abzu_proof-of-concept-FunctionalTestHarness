@@ -59,6 +59,6 @@
     "aioExcludeEncs" : ["GB800001","FR800001"]
   },
   "autoTestConfig" : {
-    "encSizeConfig" : "25"
+    "encSizeConfig" : "0.5"
   }
 }

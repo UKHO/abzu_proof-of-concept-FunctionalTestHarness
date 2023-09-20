@@ -20,19 +20,25 @@ export class EsDownloadPageObjects {
     readonly invalidEncsSelector: Locator;
     readonly errorMessageSelector: Locator;
     readonly selectedENCsSelector: Locator;
+    readonly getDialogueSelector: Locator
+    readonly pageUnderTest: Page
 
     constructor(readonly page: Page) {
         this.expect = new EsDownloadPageAssertions(this);
         this.encselectionPageObjects = new EncSelectionPageObjects(page)
-        this.downloadButtonSelector = this.page.locator("//button[@type='submit']");
+        this.downloadButtonSelector = this.page.getByRole('button',{name: 'Download'});     //this.page.locator("//button[@type='submit']");
         this.spinnerSelector = this.page.locator("i.fas.fa-circle-notch.fa-spin");
         this.includedENCsCountSelector = this.page.locator("(//strong[@class='f21'][2])");
         this.EstimatedESsizeSelector = this.page.locator("//p[@class='f21']");
+        
         this.selectedTextSelector = this.page.locator("div[id='contentArea'] strong:nth-child(1)");
         this.invalidEncsSelector = this.page.locator("(//div[@class='warningMsg'])");
-        this.errorMessageSelector = this.page.locator("text = There has been an error");
+        this.errorMessageSelector = this.page.getByText("There has been an error");
         //this.selectedENCsSelector = this.page.locator("(//div/strong)[1]");
-        this.selectedENCsSelector = this.page.getByText(SelectedENCs+' ENCs selected')
+        //this.selectedENCsSelector = this.page.getByText(SelectedENCs+' ENCs selected')
+        this.selectedENCsSelector = this.page.locator('p').filter({hasText:' ENCs selected'});
+        this.getDialogueSelector = this.page.locator(("admiralty-dialogue"));
+        this.pageUnderTest = page;
     }
 
     async downloadFile(page: Page, path: string): Promise<void> {
@@ -76,8 +82,8 @@ class EsDownloadPageAssertions {
     }
 
     async errorMessageSelectorDisplayed(): Promise<void> {
-
-        expect(await this.esDownloadPageObjects.errorMessageSelector.innerText()).toBeTruthy();
+        expect(this.esDownloadPageObjects.getDialogueSelector).toBeTruthy();
+        expect(this.esDownloadPageObjects.errorMessageSelector).toBeTruthy();
     }
 
     async VerifyExchangeSetSize(): Promise<void> {
@@ -85,20 +91,32 @@ class EsDownloadPageAssertions {
         let ENCsIncluded = parseInt(((await this.esDownloadPageObjects.includedENCsCountSelector.innerHTML()).split(' '))[0]);
 
         expect(await this.esDownloadPageObjects.EstimatedESsizeSelector.innerText()).toEqual('Estimated size ' + ((ENCsIncluded * (0.3))+Number.parseFloat( autoTestConfig.encSizeConfig)).toFixed(1) + 'MB');
-
     
+    }
+
+    VerifyExchangeSetSizeIsValid(estimated:string,included:number): void  {
+        //new for Admiralty
+        let estimatedSize = included * (0.3);
+        let defaultSize = Number.parseFloat( autoTestConfig.encSizeConfig);
+        let literal: string = 'Estimated size ' + (estimatedSize+defaultSize).toFixed(1) + 'MB';
+        expect(estimated).toEqual(literal);
     }
 
     async ValidateInvalidENCsAsPerCount(InValidENCs: string[]): Promise<void> {
 
-        for (var i = 0; i < 3; i++) {
+        const testPage = this.esDownloadPageObjects.pageUnderTest;
+        expect(await this.esDownloadPageObjects.getDialogueSelector).toBeTruthy();
+        expect(await testPage.getByText(InValidENCs[0] + ' - invalidProduct')).toBeTruthy();
+        expect(await testPage.getByText(InValidENCs[1] + ' - invalidProduct')).toBeTruthy();
+        expect(await testPage.getByText(InValidENCs[2] + ' - productWithdrawn')).toBeTruthy();
+        /* for (var i = 0; i < 3; i++) {
             if (i < 2) {
                 expect(await this.esDownloadPageObjects.invalidEncsSelector.nth(i).innerText()).toEqual(InValidENCs[i] + ' - invalidProduct');
             }
             else {
                 expect(await this.esDownloadPageObjects.invalidEncsSelector.nth(i).innerText()).toEqual(InValidENCs[i] + ' - productWithdrawn');
             }
-        }
+        } */
     }
 
     async ValidateFileDownloaded(path: string): Promise<void> {

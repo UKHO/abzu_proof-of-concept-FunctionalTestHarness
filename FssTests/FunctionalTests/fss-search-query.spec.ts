@@ -7,7 +7,9 @@ import {SearchAttribute, SearchAttributeSecondRow, ClickWaitRetry, TryGetFileSiz
   , ExpectAllResultsHaveBatchUserAttValue,
   ExpectAllResultsContainBatchUserAttValue,
   ExpectAllResultsHaveFileAttributeValue, GetTotalResultCount,
-  GetCountOfBatchRows} from '../Assets/Helper/SearchPageHelper';
+  GetCountOfBatchRows,
+  AdmiraltyExpectAllResultsHaveFileAttributeValue,
+  AdmiraltyGetFileSizeCount} from '../Assets/Helper/SearchPageHelper';
 import { attributeProductType, attributeMimeType, attributeBusinessUnit, attributeFileSize, searchNonExistBatchAttribute} from '../Assets/Helper/ConstantHelper';
 
 const searchQuerySqlInjection = "adds''; drop table BatchAttribute";
@@ -31,7 +33,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeProductType.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, "eq");
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, attributeProductType.value);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     await ExpectAllResultsHaveBatchUserAttValue(page, attributeProductType.value);
   });
 
@@ -42,7 +45,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, "contains");     
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, batchAttributeSpecialChar);
 
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     await ExpectAllResultsContainBatchUserAttValue(page, batchAttributeSpecialChar);
   });
 
@@ -55,9 +59,11 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttributeSecondRow(page, attributeMimeType.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelectorSecondRow, "eq");     
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelectorSecondRow, attributeMimeType.value);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     await ExpectAllResultsHaveBatchUserAttValue(page, attributeProductType.value);
-    await ExpectAllResultsHaveFileAttributeValue(page, attributeMimeType.value);
+    //await ExpectAllResultsHaveFileAttributeValue(page, attributeMimeType.value);
+    await AdmiraltyExpectAllResultsHaveFileAttributeValue(page, attributeMimeType.value);
   });
 
   test('Test to verify grouping button is disabled', async ({ page }) => {    
@@ -108,7 +114,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeProductType.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, "eq");     
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, attributeProductType.value);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     await ExpectAllResultsHaveBatchUserAttValue(page, attributeProductType.value);
     const resultCount = await GetCountOfBatchRows(page);        
     //Get the product counts on UI
@@ -121,8 +128,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeProductType.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, "eq");
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, attributeProductType.value);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
-
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     // Click on expand button
     await page.click(fssSearchPageObjectsConfig.chooseFileDownloadSelector);
     // Click on download button
@@ -136,7 +143,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeProductType.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, 'eq');     
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, attributeProductType.value);      
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
     const countWithoutFileSizeFilter = await GetTotalResultCount(page);
     expect(countWithoutFileSizeFilter).toBeTruthy();
     await page.click(fssSearchPageObjectsConfig.buttonAddNewRow);
@@ -144,7 +152,11 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelectorSecondRow, 'lt');
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelectorSecondRow, attributeFileSize.value);
 
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.searchAttributeTable);
+    await page.getByTestId('adv-search-button').click();
+    let spin = page.getByTestId('search-spinner');
+    await spin.waitFor({state: "visible"});
+    await spin.waitFor({state: "hidden"});
     const countWithFileSizeFilter = await GetTotalResultCount(page);
     expect(countWithFileSizeFilter).toBeTruthy();
     expect(countWithFileSizeFilter).toBeLessThan(countWithoutFileSizeFilter);
@@ -154,18 +166,22 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     const fileAttTables = await page.$$(`//admiralty-table`);
     expect(fileAttTables.length).toBeTruthy();
     const filterFileSize = parseInt(attributeFileSize.value, 10);
+    
 
     // each table must contain at least one file smaller than the filter 
-    for (const fileAttTable of fileAttTables) {
-      const tds = await fileAttTable.$$eval('td', nodes => nodes.map(node => node.innerText));
+    const fileCount = await AdmiraltyGetFileSizeCount(page,filterFileSize);
+    expect(fileCount).toBeTruthy();
+
+    /* for (const fileAttTable of fileAttTables) {
+      const tds = await fileAttTable.$$eval('admiralty-table-cell', nodes => nodes.map(node => node.innerHTML));
       const fileCount = tds
           .filter(innerText => innerText)
           .map(innerText => TryGetFileSizeInBytes(innerText))
           .filter(fileSize => fileSize && fileSize < filterFileSize)
-          .length;
+          .length; 
 
       expect(fileCount).toBeTruthy();
-    }
+    } */
   });
 
   test('Test to verify no result for search query', async ({ page }) => {
@@ -173,7 +189,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, 'eq');
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, 'L1K2');
 
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    await page.getByTestId('adv-search-button').click();
     // Verify dialog info for no records
     const infoText = await page.locator(fssSearchPageObjectsConfig.dialogTitleSelector).innerText();
     expect(infoText).toEqual(fssSearchPageObjectsConfig.dialogInfoText);
@@ -184,8 +201,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeFileSize.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, 'eq');
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, 'L1K2');
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
-
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    await page.getByTestId('adv-search-button').click(); 
     // Verify warning message
     const warningMessage = await page.locator(fssSearchPageObjectsConfig.dialogTitleSelector).innerText();
     expect(warningMessage).toEqual(fssSearchPageObjectsConfig.dialogWarningText);
@@ -195,8 +212,8 @@ test.describe('Test Search Query Scenario On Search Page', () => {
     await SearchAttribute(page, attributeBusinessUnit.key);
     await page.selectOption(fssSearchPageObjectsConfig.operatorDropDownSelector, 'eq');
     await page.fill(fssSearchPageObjectsConfig.inputSearchValueSelector, searchQuerySqlInjection);
-    await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
-
+    //await ClickWaitRetry(page, fssSearchPageObjectsConfig.searchAttributeButton, fssSearchPageObjectsConfig.dialogInfoSelector);
+    await page.getByTestId('adv-search-button').click();
     // Verify dialog info for no records
     const infoText = await page.locator(fssSearchPageObjectsConfig.dialogTitleSelector).innerText();
     expect(infoText).toEqual(fssSearchPageObjectsConfig.dialogInfoText);

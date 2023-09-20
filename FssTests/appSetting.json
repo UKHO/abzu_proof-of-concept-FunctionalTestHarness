@@ -7,6 +7,7 @@
        "user" :"UKHODevTestUser1@outlook.com",
        "password" : "Fh84e3W!kl",
        "userFullName" : "Test User",
-       "webname" : "Admiralty Home Page Functional Test Scenarios"
+       "webname" : "Admiralty Home Page Functional Test Scenarios",
+       "apiurl" : "https://uatadmiralty.azure-api.net/fss-qa"
     }
 }

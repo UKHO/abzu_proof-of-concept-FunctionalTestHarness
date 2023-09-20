@@ -32,6 +32,7 @@ test.describe('Test Search Result Scenario On Simplified Search Page', () => {
     await LoginPortal(page, autoTestConfig.user, autoTestConfig.password);
     await page.waitForSelector(fssSearchPageObjectsConfig.searchPageContainerHeaderSelector);
     expect(await page.innerHTML(fssSearchPageObjectsConfig.searchPageContainerHeaderSelector)).toEqual(fssSearchPageObjectsConfig.searchPageContainerHeaderText);
+    
 
   })
 
