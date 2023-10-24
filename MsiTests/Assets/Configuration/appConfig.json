@@ -1,0 +1,13 @@
+{
+  "url": "https://msi-dev.admiralty.co.uk",
+  "rnwAdminUrl": "https://rnwadmin-dev.ukho.gov.uk",
+  "B2CAutoTest_User": "",
+  "B2CAutoTest_Pass": "",
+  "RNWAdminAutoTest_User": "",
+  "RNWAdminAutoTest_Pass": "",
+  "RNWAdminAutoTestNoAccess_User":"",
+  "RNWAdminAutoTestNoAccess_Pass":"",
+  "DistributorTest_UserName":"",
+  "DistributorTest_Password":""
+
+}
