@@ -47,7 +47,7 @@ export class EncSelectionPageObjects {
     this.esslandingPageObjects = new EssLandingPageObjects(page);
     this.encNameSelector = this.page.locator("text=ENC name"); 
     this.startLinkSelector = this.page.locator(".linkStartAgain"); 
-    this.textAboveTableSelector = this.page.locator("text=Select up to 100 ENCs and make an exchange set"); 
+    this.textAboveTableSelector = this.page.locator("text=Select up to 250 ENCs and make an exchange set"); 
     
     this.XButtonSelector = this.page.locator("//table/tbody/tr/td[2]/button/i"); 
     this.addAnotherENCSelector = this.page.locator("a.lnkAddAnotherEnc"); 
@@ -149,9 +149,10 @@ class EncSelectionPageAssertions {
     if (expectedENCs.length) {
       for (var i = 0; i < expectedENCs.length; i++) {
 
-        await testPage.getByRole('row', { name: expectedENCs[i] }).getByLabel('', { exact: true }).check();
-
-        const matchItem = testPage.getByRole('row').filter({ hasText: `Remove ${expectedENCs[i]} from selected ENC` });
+        //await testPage.getByRole('row', { name: expectedENCs[i] }).getByLabel('', { exact: true }).check();
+        await testPage.getByLabel(expectedENCs[i]).getByRole("checkbox").first().check();
+        //const matchItem = testPage.getByRole('row').filter({ hasText: `Remove ${expectedENCs[i]} from selected ENC` });
+        const matchItem = testPage.getByTestId(expectedENCs[i])
 
         expect(matchItem).toBeTruthy();
       }
@@ -168,7 +169,8 @@ class EncSelectionPageAssertions {
     if (expectedENCs.length) {
       for (var i = 0; i < expectedENCs.length; i++) {
 
-        await testPage.getByRole('row', { name: expectedENCs[i] }).getByLabel('', { exact: true }).uncheck();
+        //await testPage.getByRole('row', { name: expectedENCs[i] }).getByLabel('', { exact: true }).uncheck();
+        await testPage.getByLabel(expectedENCs[i]).getByRole("checkbox").first().uncheck();
 
       }
 
@@ -195,14 +197,14 @@ class EncSelectionPageAssertions {
 
   }
 
-  async verifyXButtonSelectorClick(): Promise<void> {
-
-    await this.encSelectionPageObjects.firstCheckBoxSelector.click();
-
-    await this.encSelectionPageObjects.XButtonSelector.click();
-    await expect(this.encSelectionPageObjects.firstCheckBoxSelector).not.toBeChecked();
-
-    await expect(this.encSelectionPageObjects.XButtonSelector).toBeHidden();
+  async verifyXButtonSelectorClick(testId: string): Promise<void> {
+    const testPage = this.encSelectionPageObjects.pageUnderTest;
+    const admiraltyCheckbox = testPage.getByLabel(testId).getByRole("checkbox").first();
+    await admiraltyCheckbox.click();
+    //now click the "X" on the left
+    await testPage.getByTestId(testId).click();
+    await expect(admiraltyCheckbox).not.toBeChecked();
+    await expect(testPage.getByTestId(testId)).toBeHidden()
   }
 
 

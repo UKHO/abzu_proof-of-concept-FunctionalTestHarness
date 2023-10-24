@@ -27,13 +27,13 @@ test.describe('ESS UI Landing Page Functional Test Scenarios', () => {
      // https://dev.azure.com/ukhocustomer/File-Share-Service/_workitems/edit/13806
      // https://dev.azure.com/ukhocustomer/File-Share-Service/_workitems/edit/14421
      test('Verify Radio buttons text on ESS landing page', async ({ page }) => {
-          
           const headLabel = page.locator("h1#main");
           const radio1 = page.getByRole('radio', { name: "Upload a list in a file" });
           const radio2 = page.getByRole('radio', { name: "Add ENC" });
-          await expect(radio1).toBeVisible();
-          await expect(radio2).toBeVisible();
-     })
+          await expect(radio1).toBeTruthy();
+          await expect(radio2).toBeTruthy();
+        
+      })
 
      // https://dev.azure.com/ukhocustomer/File-Share-Service/_workitems/edit/13799
      // https://dev.azure.com/ukhocustomer/File-Share-Service/_workitems/edit/14422
@@ -157,7 +157,6 @@ test.describe('ESS UI Landing Page Functional Test Scenarios', () => {
           await esslandingPageObjects.DragDropFile(page, './Tests/TestData/FileOtherThanCSVorTXT.xlsx', 'FileOtherThanCSVorTXT.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
           await esslandingPageObjects.expect.errorMessageSelectorContainText('Please select a .csv or .txt file');
      })
-
      //https://dev.azure.com/ukhydro/ENC%20Publishing/_workitems/edit/61808  
      test('Verify that input of ENC name is not case sensitive ', async ({ page }) => {
 

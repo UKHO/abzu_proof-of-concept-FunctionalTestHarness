@@ -11,7 +11,7 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './FssTests/AccessibilityTests',
+  testDir: './FssTests/FunctionalTests',
   /* Maximum time one test can run for. */
   timeout: 80 * 1000,
   expect: {
